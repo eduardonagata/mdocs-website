@@ -1,0 +1,284 @@
+/*
+ * Folha A4 em escala física: 1 mm = 100cqw / 210.
+ * Todas as medidas internas são derivadas de --mm e --pt, então a mesma folha
+ * pode ser exibida com 280 px ou 900 px de largura sem perder proporção.
+ */
+
+.frame {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 210 / 297;
+  background: var(--sheet, #fffefb);
+}
+
+.page {
+  --mm: calc(100cqw / 210);
+  --pt: calc(var(--mm) * 0.3527778);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  font-family: var(--font-serif);
+  color: var(--text-color);
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+}
+
+.body {
+  position: absolute;
+  top: calc(var(--m-top) * var(--mm));
+  bottom: calc(var(--m-bottom) * var(--mm));
+  left: calc(var(--m-left) * var(--mm));
+  right: calc(var(--m-right) * var(--mm));
+  overflow: hidden;
+  font-size: calc(var(--body-size) * var(--pt));
+  line-height: var(--lh);
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+}
+
+.block {
+  position: relative;
+  border-radius: calc(0.6 * var(--mm));
+  transition:
+    background-color 260ms var(--ease-out),
+    box-shadow 260ms var(--ease-out);
+}
+
+.block[data-active] {
+  background: rgb(63 95 140 / 0.06);
+  box-shadow: 0 0 0 calc(1.4 * var(--mm)) rgb(63 95 140 / 0.06);
+  outline: 1px solid rgb(63 95 140 / 0.5);
+  outline-offset: calc(1.4 * var(--mm));
+}
+
+.p {
+  margin: 0 0 calc(var(--par-gap) * 1em);
+  text-align: var(--body-align);
+}
+
+.p strong,
+.ul strong {
+  font-weight: 700;
+}
+
+.h1,
+.h2 {
+  color: var(--heading-color);
+  font-weight: 600;
+  line-height: 1.15;
+  hyphens: manual;
+  text-wrap: balance;
+}
+
+.h1 {
+  font-size: calc(var(--h1-size) * var(--pt));
+  text-align: var(--h1-align);
+  margin: 0 0 0.75em;
+}
+
+.h2 {
+  font-size: calc(var(--h2-size) * var(--pt));
+  text-align: var(--h2-align);
+  margin: 1.1em 0 0.45em;
+}
+
+.h1 + .h2 {
+  margin-top: 0.4em;
+}
+
+.capsUpper {
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.capsSmall {
+  font-variant-caps: small-caps;
+  letter-spacing: 0.045em;
+}
+
+.ul {
+  list-style: none;
+  margin: 0 0 calc(var(--par-gap) * 1em);
+  padding: 0 0 0 calc(5 * var(--mm));
+}
+
+.ul li {
+  position: relative;
+}
+
+.ul li::before {
+  content: '•';
+  position: absolute;
+  left: calc(-3.2 * var(--mm));
+}
+
+/* Etiqueta da regra aplicada (fora da escala física, para ser legível) */
+.rule {
+  position: absolute;
+  right: calc(-1.2 * var(--mm));
+  bottom: calc(100% + 1.2 * var(--mm) + 4px);
+  z-index: 2;
+  padding: 3px 7px 3px;
+  border-radius: 5px;
+  background: var(--steel, #3f5f8c);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  font-style: normal;
+  font-variant-caps: normal;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: ruleIn 360ms var(--ease-out) both;
+}
+
+.h1 .rule {
+  bottom: auto;
+  top: calc(100% + 1.2 * var(--mm) + 4px);
+}
+
+@keyframes ruleIn {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+
+/* Papel timbrado — ocupa a área de margem, como num timbre impresso */
+.letterhead {
+  position: absolute;
+  top: calc(10 * var(--mm));
+  left: calc(18 * var(--mm));
+  right: calc(18 * var(--mm));
+  height: calc(13 * var(--mm));
+  display: flex;
+  align-items: center;
+  gap: calc(3 * var(--mm));
+  padding-bottom: calc(2.4 * var(--mm));
+  border-bottom: max(1px, calc(0.25 * var(--mm))) solid var(--heading-color);
+  color: var(--heading-color);
+  animation: inkIn 500ms var(--ease-out) both;
+}
+
+.lhMark {
+  width: calc(10 * var(--mm));
+  height: calc(10 * var(--mm));
+  border-radius: calc(1.6 * var(--mm));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  padding: 0 calc(1.4 * var(--mm));
+  background: var(--heading-color);
+  color: #fff;
+  font-size: calc(13 * var(--pt));
+  font-weight: 600;
+  line-height: 1;
+}
+
+.lhMark span:last-child {
+  font-style: italic;
+  font-weight: 400;
+  transform: translateY(8%);
+}
+
+.lhName {
+  display: grid;
+  line-height: 1.1;
+}
+
+.lhName strong {
+  font-size: calc(12.5 * var(--pt));
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lhName span {
+  font-size: calc(8 * var(--pt));
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.lhAddress {
+  margin-left: auto;
+  text-align: right;
+  font-size: calc(7 * var(--pt));
+  line-height: 1.35;
+  opacity: 0.85;
+}
+
+.lhFooter {
+  position: absolute;
+  left: calc(18 * var(--mm));
+  right: calc(18 * var(--mm));
+  bottom: calc(8 * var(--mm));
+  padding-top: calc(1.8 * var(--mm));
+  border-top: max(0.5px, calc(0.15 * var(--mm))) solid currentColor;
+  color: var(--heading-color);
+  font-size: calc(6.8 * var(--pt));
+  letter-spacing: 0.04em;
+  text-align: center;
+  opacity: 0.85;
+  animation: inkIn 500ms var(--ease-out) both;
+}
+
+@keyframes inkIn {
+  from {
+    opacity: 0;
+    filter: blur(1px);
+  }
+}
+
+.running {
+  position: absolute;
+  top: calc(12 * var(--mm));
+  right: calc(var(--m-right) * var(--mm));
+  font-size: calc(7.5 * var(--pt));
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.folio {
+  position: absolute;
+  right: calc(var(--m-right) * var(--mm));
+  bottom: calc(max(13, var(--m-bottom) * 0.55) * var(--mm));
+  font-size: calc(7.5 * var(--pt));
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.signatures {
+  display: grid;
+  gap: calc(9 * var(--mm));
+  margin-top: calc(10 * var(--mm));
+}
+
+.sig {
+  display: grid;
+  gap: calc(1 * var(--mm));
+}
+
+.sig strong {
+  font-weight: 700;
+}
+
+.sigLine {
+  display: block;
+  height: 0;
+  margin-top: calc(9 * var(--mm));
+  border-top: max(0.5px, calc(0.2 * var(--mm))) solid currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rule,
+  .letterhead,
+  .lhFooter {
+    animation: none;
+  }
+}

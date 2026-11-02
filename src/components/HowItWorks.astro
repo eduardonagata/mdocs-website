@@ -1,0 +1,414 @@
+---
+const stations = [
+  {
+    n: '01',
+    title: 'Conversa',
+    text: 'Você descreve o documento; o agente redige.',
+    visual: 'chat',
+  },
+  {
+    n: '02',
+    title: 'Markdown',
+    text: 'O texto fica no formato nativo da IA: leve, legível, econômico.',
+    visual: 'md',
+  },
+  {
+    n: '03',
+    title: 'Blocos',
+    text: 'O markdown é decomposto em títulos, parágrafos, listas e ênfases.',
+    visual: 'blocks',
+  },
+  {
+    n: '04',
+    title: 'Modelo',
+    text: 'Cada tipo de bloco recebe a regra definida no modelo do documento.',
+    visual: 'rules',
+  },
+  {
+    n: '05',
+    title: 'Typst → PDF',
+    text: 'O motor compõe a página: A4, margens, timbre, paginação.',
+    visual: 'page',
+  },
+];
+
+const principles = [
+  {
+    k: 'Determinismo',
+    title: 'O mesmo texto gera sempre o mesmo PDF.',
+    text: 'Cada arquivo .mdoc fixa a versão do motor e do modelo de formatação. Abra o contrato daqui a anos e obtenha exatamente o mesmo documento.',
+  },
+  {
+    k: 'Segurança',
+    title: 'Seu texto nunca vira código.',
+    text: 'O conteúdo chega ao motor como dado, nunca como marcação. Um colchete, uma cerquilha ou um asterisco no meio da cláusula não quebram a diagramação.',
+  },
+  {
+    k: 'Consistência',
+    title: 'Menos efeitos, de propósito.',
+    text: 'Cada elemento do markdown corresponde a um elemento tipográfico. Trocamos a liberdade de um editor de texto pela hierarquia impecável que documentos formais exigem.',
+  },
+  {
+    k: 'Durabilidade',
+    title: 'Modelos descritos em dados.',
+    text: 'Os modelos são declarativos e independentes da sintaxe do motor. Atualizações do Typst não quebram documentos antigos; só ampliam o que os novos podem fazer.',
+  },
+];
+---
+
+<section class="section how" id="como-funciona">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="label section-index">03 · Como funciona</p>
+      <h2 class="h2">
+        Uma linha de composição.
+        <span class="paper-voice">Previsível por projeto.</span>
+      </h2>
+      <p class="lead">
+        O MarkDocs não tenta adivinhar a formatação. Ele decompõe o markdown nos blocos que o constituem e aplica a
+        cada tipo de bloco a regra que você definiu — sempre da mesma forma. Você não precisa saber markdown; só o
+        agente precisa.
+      </p>
+    </header>
+
+    <ol class="line reveal" aria-label="Etapas da composição">
+      {
+        stations.map((s, i) => (
+          <li class="station" style={`--reveal-delay:${i * 80}ms`}>
+            <div class="visual" aria-hidden="true" data-v={s.visual}>
+              {s.visual === 'chat' && (
+                <div class="v-chat">
+                  <span class="bubble bubble--me">Redija um contrato de locação…</span>
+                  <span class="bubble">Pronto. Contrato redigido.</span>
+                </div>
+              )}
+              {s.visual === 'md' && (
+                <div class="v-md">
+                  <span>
+                    <span class="m">#</span> Contrato
+                  </span>
+                  <span>
+                    <span class="m">##</span> Vigência
+                  </span>
+                  <span>
+                    Prazo de <span class="m">**</span>24 meses<span class="m">**</span>
+                  </span>
+                  <span>
+                    <span class="m">-</span> Pagar o aluguel
+                  </span>
+                </div>
+              )}
+              {s.visual === 'blocks' && (
+                <div class="v-blocks">
+                  <span>
+                    <b>H1</b>
+                    <i style="width:62%" />
+                  </span>
+                  <span>
+                    <b>H2</b>
+                    <i style="width:40%" />
+                  </span>
+                  <span>
+                    <b>¶</b>
+                    <i style="width:88%" />
+                  </span>
+                  <span>
+                    <b>•</b>
+                    <i style="width:70%" />
+                  </span>
+                </div>
+              )}
+              {s.visual === 'rules' && (
+                <dl class="v-rules">
+                  <dt>título 1</dt>
+                  <dd>16 pt · versais · centro</dd>
+                  <dt>título 2</dt>
+                  <dd>11 pt · versais</dd>
+                  <dt>parágrafo</dt>
+                  <dd>11 pt · justificado</dd>
+                </dl>
+              )}
+              {s.visual === 'page' && (
+                <div class="v-page">
+                  <span class="lh" />
+                  <span class="t" />
+                  <span class="l" style="width:46%" />
+                  <span class="l" />
+                  <span class="l" />
+                  <span class="l" style="width:74%" />
+                  <span class="l" style="width:38%;margin-top:6px" />
+                  <span class="l" />
+                  <span class="l" style="width:84%" />
+                </div>
+              )}
+            </div>
+            <div class="station-text">
+              <span class="label">{s.n}</span>
+              <h3 class="h3">{s.title}</h3>
+              <p>{s.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="principles">
+      {
+        principles.map((p, i) => (
+          <article class="principle reveal" style={`--reveal-delay:${i * 70}ms`}>
+            <p class="label label--steel">{p.k}</p>
+            <h3 class="h3">{p.title}</h3>
+            <p class="muted">{p.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Linha de composição ────────────────────────────────── */
+  .line {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    margin-top: var(--space-8);
+    position: relative;
+  }
+
+  /* trilho que atravessa as estações */
+  .line::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 86px;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, var(--ink-4) 0 6px, transparent 6px 12px);
+    opacity: 0.6;
+  }
+
+  .station {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: var(--space-5);
+    padding-right: var(--space-5);
+  }
+
+  .visual {
+    position: relative;
+    z-index: 1;
+    height: 172px;
+    display: grid;
+    place-items: center;
+    margin-right: var(--space-2);
+    border-radius: var(--radius-md);
+    background: var(--paper-0);
+    box-shadow: 0 0 0 1px var(--line);
+    overflow: hidden;
+  }
+
+  .station-text {
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    padding-right: var(--space-3);
+  }
+
+  .station-text p {
+    font-size: 0.95rem;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+
+  /* visuais */
+  .v-chat {
+    display: grid;
+    gap: 8px;
+    width: 82%;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .bubble {
+    justify-self: start;
+    padding: 6px 9px;
+    border-radius: 10px 10px 10px 3px;
+    background: var(--paper-2);
+    color: var(--ink-2);
+  }
+  .bubble--me {
+    justify-self: end;
+    border-radius: 10px 10px 3px 10px;
+    background: var(--metal-800);
+    color: #e6ebf1;
+  }
+
+  .v-md {
+    display: grid;
+    width: 84%;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.75;
+    color: var(--ink-2);
+  }
+  .v-md .m {
+    color: var(--steel);
+    font-weight: 500;
+  }
+
+  .v-blocks {
+    display: grid;
+    gap: 9px;
+    width: 80%;
+  }
+  .v-blocks span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .v-blocks b {
+    width: 26px;
+    flex: none;
+    padding: 2px 0;
+    border-radius: 4px;
+    background: var(--steel-soft);
+    color: var(--steel);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    text-align: center;
+  }
+  .v-blocks i {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--paper-3);
+  }
+
+  .v-rules {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 7px 10px;
+    width: 86%;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+  }
+  .v-rules dt {
+    color: var(--steel);
+  }
+  .v-rules dd {
+    color: var(--ink-2);
+  }
+
+  .v-page {
+    display: grid;
+    align-content: start;
+    gap: 4px;
+    width: 92px;
+    aspect-ratio: 210 / 297;
+    padding: 9px 11px;
+    background: var(--sheet);
+    box-shadow:
+      0 0 0 0.5px rgb(22 24 27 / 0.15),
+      0 8px 16px -8px rgb(22 24 27 / 0.3);
+  }
+  .v-page span {
+    display: block;
+    height: 2px;
+    border-radius: 1px;
+    background: #c9ccd2;
+  }
+  .v-page .lh {
+    height: 5px;
+    width: 40%;
+    margin-bottom: 4px;
+    background: var(--steel);
+  }
+  .v-page .t {
+    height: 3px;
+    width: 64%;
+    margin: 2px auto 3px;
+    background: var(--ink-2);
+  }
+
+  /* ── Princípios ─────────────────────────────────────────── */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-9);
+    padding-top: var(--space-7);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .principle {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+  }
+
+  .principle .muted {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 1040px) {
+    .line {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      max-width: 560px;
+    }
+    .line::before {
+      top: 0;
+      bottom: 0;
+      left: 60px;
+      right: auto;
+      width: 1px;
+      height: auto;
+      background: repeating-linear-gradient(180deg, var(--ink-4) 0 6px, transparent 6px 12px);
+    }
+    .station {
+      grid-template-columns: 120px 1fr;
+      align-items: center;
+      padding-right: 0;
+    }
+    .visual {
+      height: 104px;
+      margin-right: 0;
+    }
+    .v-chat,
+    .v-md,
+    .v-rules {
+      transform: scale(0.8);
+    }
+    .v-page {
+      width: 60px;
+      padding: 6px 7px;
+      gap: 3px;
+    }
+    .principles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .station {
+      grid-template-columns: 96px 1fr;
+    }
+    .line::before {
+      left: 48px;
+    }
+    .v-chat {
+      transform: scale(0.62);
+    }
+    .v-md,
+    .v-rules {
+      transform: scale(0.66);
+    }
+    .principles {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

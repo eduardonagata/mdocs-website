@@ -1,0 +1,312 @@
+---
+import AppIcon from '../react/AppIcon';
+
+const points = [
+  {
+    k: 'Seus arquivos',
+    title: 'Ficam no seu disco.',
+    text: 'Documentos .mdoc locais. Sem conta obrigatória, sem nuvem obrigatória e sem depender da disponibilidade de um serviço de terceiros para abrir um contrato.',
+  },
+  {
+    k: 'Seu custo',
+    title: 'Pago direto ao provedor.',
+    text: 'Você usa a sua conta e paga exatamente o que consumir. Sem margem embutida, sem pacote de mensagens, sem assinatura de IA disfarçada no preço.',
+  },
+  {
+    k: 'Seu modelo',
+    title: 'Escolhido por você.',
+    text: 'Hoje, os modelos Claude, da Anthropic. Você sabe qual modelo está redigindo o seu documento — e pode trocá-lo quando quiser.',
+  },
+];
+---
+
+<section class="section byok" id="privacidade">
+  <div class="brushed" aria-hidden="true"></div>
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="label section-index">05 · Sua chave</p>
+      <h2 class="h2">
+        Sua chave. Seu modelo.
+        <span class="paper-voice">Seus documentos.</span>
+      </h2>
+      <p class="lead">
+        O MarkDocs é software instalado, não um serviço. O agente conversa com o provedor de IA usando a sua própria
+        chave de API, direto do seu dispositivo — sem um servidor nosso no meio do caminho.
+      </p>
+    </header>
+
+    <figure class="route reveal" aria-label="Caminho dos dados: do seu dispositivo direto ao provedor de IA">
+      <div class="node node--you">
+        <AppIcon size={44} grain={0.14} />
+        <div>
+          <strong>Seu Mac ou iPhone</strong>
+          <span class="mono">MarkDocs · documentos .mdoc</span>
+        </div>
+      </div>
+
+      <div class="wire" aria-hidden="true">
+        <span class="wire-line"><span class="packet"></span></span>
+        <span class="wire-label mono">HTTPS · sua chave de API</span>
+      </div>
+
+      <div class="node node--ghost" aria-hidden="true">
+        <s class="mono">servidor intermediário</s>
+        <span class="mono ghost-note">não existe</span>
+      </div>
+
+      <div class="wire wire--short" aria-hidden="true">
+        <span class="wire-line"></span>
+      </div>
+
+      <div class="node node--provider">
+        <b class="provider-mark mono" aria-hidden="true">API</b>
+        <div>
+          <strong>Anthropic</strong>
+          <span class="mono">API · modelos Claude</span>
+        </div>
+      </div>
+    </figure>
+
+    <div class="points">
+      {
+        points.map((p, i) => (
+          <article class="point reveal" style={`--reveal-delay:${i * 80}ms`}>
+            <p class="label">{p.k}</p>
+            <h3 class="h3">{p.title}</h3>
+            <p>{p.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .byok {
+    --ink-1: #eef1f5;
+    --ink-2: #b9c1cc;
+    --ink-3: #8f99a8;
+    --line: rgb(255 255 255 / 0.09);
+    --line-strong: rgb(255 255 255 / 0.16);
+    background: linear-gradient(175deg, #20252d 0%, #171a20 100%);
+    color: var(--ink-1);
+    overflow: hidden;
+  }
+
+  .brushed {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 0%, rgb(159 184 220 / 0.1), transparent 70%),
+      repeating-linear-gradient(118deg, rgb(255 255 255 / 0.014) 0 1px, transparent 1px 4px);
+    pointer-events: none;
+  }
+
+  .byok .container {
+    position: relative;
+  }
+
+  .byok :global(.label--steel),
+  .byok .h2 {
+    color: var(--ink-1);
+  }
+
+  .byok .h2 .paper-voice {
+    color: var(--steel-on-dark);
+  }
+
+  /* ── Rota ─────────────────────────────────────────────────── */
+  .route {
+    display: grid;
+    grid-template-columns: auto minmax(80px, 1fr) auto minmax(40px, 0.5fr) auto;
+    align-items: center;
+    margin: var(--space-8) 0 0;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 0.03);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+
+  .node {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px 14px 14px;
+    border-radius: var(--radius-md);
+    background: rgb(255 255 255 / 0.05);
+    box-shadow:
+      inset 0 0 0 1px var(--line-strong),
+      inset 0 1px 0 rgb(255 255 255 / 0.06);
+  }
+
+  .node strong {
+    display: block;
+    font-weight: 600;
+    color: var(--ink-1);
+  }
+
+  .node span.mono {
+    display: block;
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  .node--ghost {
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 18px;
+    background: transparent;
+    box-shadow: none;
+    border: 1px dashed rgb(255 255 255 / 0.18);
+    text-align: center;
+  }
+
+  .node--ghost s {
+    font-size: 11px;
+    color: var(--ink-3);
+    text-decoration-color: #e38b77;
+  }
+
+  .node--ghost .ghost-note {
+    color: #e38b77;
+  }
+
+  .provider-mark {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    background: rgb(255 255 255 / 0.08);
+    box-shadow: inset 0 0 0 1px var(--line-strong);
+    color: var(--ink-1);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  .wire {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    padding-inline: 12px;
+  }
+
+  .wire-line {
+    position: relative;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, rgb(159 184 220 / 0.2), rgb(159 184 220 / 0.7));
+  }
+
+  .wire--short .wire-line {
+    background: rgb(159 184 220 / 0.7);
+  }
+
+  .wire-label {
+    position: absolute;
+    top: 12px;
+    font-size: 10.5px;
+    color: var(--steel-on-dark);
+    white-space: nowrap;
+  }
+
+  .packet {
+    position: absolute;
+    top: -2.5px;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--steel-on-dark);
+    box-shadow: 0 0 10px 2px rgb(159 184 220 / 0.6);
+    animation: packet 3.2s var(--ease-in-out) infinite;
+  }
+
+  @keyframes packet {
+    0% {
+      left: 0;
+      opacity: 0;
+    }
+    10%,
+    90% {
+      opacity: 1;
+    }
+    100% {
+      left: calc(100% - 6px);
+      opacity: 0;
+    }
+  }
+
+  /* ── Pontos ──────────────────────────────────────────────── */
+  .points {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-7);
+    margin-top: var(--space-8);
+  }
+
+  .point {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .point p:last-child {
+    color: var(--ink-2);
+    font-size: 0.97rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 1040px) {
+    .route {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 0;
+    }
+    .wire {
+      width: 1px;
+      height: 64px;
+      padding: 0;
+    }
+    .wire--short {
+      height: 32px;
+    }
+    .wire-line {
+      width: 1px;
+      height: 100%;
+      background: rgb(159 184 220 / 0.6);
+    }
+    .wire-label {
+      top: 50%;
+      left: 16px;
+      transform: translateY(-50%);
+    }
+    .packet {
+      left: -2.5px;
+      animation-name: packetDown;
+    }
+    .points {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+
+  @keyframes packetDown {
+    0% {
+      top: 0;
+      opacity: 0;
+    }
+    10%,
+    90% {
+      opacity: 1;
+    }
+    100% {
+      top: calc(100% - 6px);
+      opacity: 0;
+    }
+  }
+</style>

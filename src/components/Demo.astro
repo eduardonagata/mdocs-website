@@ -1,0 +1,42 @@
+---
+import AppDemo from '../react/demo/AppDemo';
+---
+
+<section class="section demo" id="demonstracao">
+  <div class="container">
+    <header class="section-head section-head--center reveal">
+      <p class="label section-index">02 · Demonstração</p>
+      <h2 class="h2">
+        Ajuste um controle.
+        <span class="paper-voice">O PDF acompanha.</span>
+      </h2>
+      <p class="lead">
+        Nada de exportar para conferir como ficou. O MarkDocs recompõe a folha a cada ajuste, ali mesmo no seu Mac.
+        Acompanhe um contrato nascer na conversa e chegar ao A4 timbrado.
+      </p>
+    </header>
+
+    <div class="bench reveal">
+      <AppDemo client:visible />
+    </div>
+
+    <p class="visually-hidden">
+      Demonstração animada do app: o usuário pede um contrato ao agente; o documento aparece como texto formatado; com
+      um clique vira um PDF em A4; no inspetor, margens, corpo do texto, títulos, papel timbrado e cor institucional são
+      ajustados e a página se recompõe imediatamente; por fim, o PDF é exportado.
+    </p>
+  </div>
+</section>
+
+<style>
+  .demo {
+    background:
+      linear-gradient(var(--line), var(--line)) top / 100% 1px no-repeat,
+      linear-gradient(var(--line), var(--line)) bottom / 100% 1px no-repeat,
+      var(--paper-2);
+  }
+
+  .bench {
+    margin-top: var(--space-8);
+  }
+</style>

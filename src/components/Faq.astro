@@ -1,0 +1,149 @@
+---
+import { site } from '../data/site';
+
+const faq = [
+  {
+    q: 'Preciso saber markdown?',
+    a: 'Não. Quem escreve markdown é o agente. Você conversa em linguagem natural, edita o documento como texto formatado e ajusta a aparência por controles visuais.',
+  },
+  {
+    q: 'O que significa “traga sua própria chave”?',
+    a: 'Você cria uma chave de API na sua conta do provedor de IA (hoje, a Anthropic) e a informa no MarkDocs. O app usa essa chave para conversar diretamente com o provedor, e o consumo é cobrado na sua conta, conforme o uso.',
+  },
+  {
+    q: 'Meus documentos passam por algum servidor do MarkDocs?',
+    a: 'Não. Os documentos ficam no seu dispositivo. Quando você conversa com o agente, o texto necessário é enviado diretamente ao provedor de IA que você escolheu.',
+  },
+  {
+    q: 'Posso usar o papel timbrado do meu escritório?',
+    a: 'Sim. O modelo Documento de negócio aplica timbre institucional — logotipo, cabeçalho, rodapé e cor — em todas as páginas do PDF.',
+  },
+  {
+    q: 'Funciona sem internet?',
+    a: 'Editar documentos e compor o PDF acontece no seu dispositivo. A conexão só é necessária para conversar com a IA.',
+  },
+  {
+    q: 'O que acontece quando o ano de atualizações termina?',
+    a: 'Nada muda no app que você já tem: ele continua funcionando para sempre. Se quiser as versões novas, renove as atualizações quando for conveniente.',
+  },
+  {
+    q: 'Em quais dispositivos posso usar?',
+    a: 'No Mac, no iPad e no iPhone. A licença individual vale para uma pessoa em todos os seus dispositivos.',
+  },
+];
+---
+
+<section class="section faq" id="perguntas">
+  <div class="container faq-grid">
+    <header class="section-head reveal">
+      <p class="label section-index">07 · Perguntas</p>
+      <h2 class="h2">Perguntas frequentes</h2>
+      <p class="muted">
+        Outra dúvida? Escreva para <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a>.
+      </p>
+    </header>
+
+    <div class="list reveal">
+      {
+        faq.map((item, i) => (
+          <details open={i === 0}>
+            <summary>
+              <span>{item.q}</span>
+              <span class="plus" aria-hidden="true" />
+            </summary>
+            <p>{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .faq-grid .section-head {
+    position: sticky;
+    top: 112px;
+  }
+
+  .muted a {
+    color: var(--steel);
+    font-weight: 600;
+  }
+
+  .list {
+    border-top: 1px solid var(--line-strong);
+  }
+
+  details {
+    border-bottom: 1px solid var(--line);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding: 22px 0;
+    font-size: 1.08rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .plus {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+
+  .plus::before,
+  .plus::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 14px;
+    height: 1.5px;
+    margin-top: -0.75px;
+    background: var(--ink-2);
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .plus::after {
+    transform: rotate(90deg);
+  }
+
+  details[open] .plus::after {
+    transform: rotate(0deg);
+  }
+
+  details p {
+    max-width: 620px;
+    padding-bottom: 24px;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 860px) {
+    .faq-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+    .faq-grid .section-head {
+      position: static;
+    }
+  }
+</style>

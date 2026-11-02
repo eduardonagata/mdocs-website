@@ -1,0 +1,113 @@
+---
+import Wordmark from './Wordmark.astro';
+import { site } from '../data/site';
+
+const links = [
+  { href: '#problema', label: 'O problema' },
+  { href: '#demonstracao', label: 'Demonstração' },
+  { href: '#como-funciona', label: 'Como funciona' },
+  { href: '#privacidade', label: 'Sua chave' },
+  { href: '#preco', label: 'Preço' },
+];
+---
+
+<header class="nav" data-nav>
+  <div class="container nav-inner">
+    <a href="#topo" class="brand" aria-label={`${site.name} — início`}>
+      <Wordmark size={26} />
+    </a>
+    <nav aria-label="Seções">
+      <ul class="links">
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="actions">
+      <span class="platforms label label--plain">macOS · iOS</span>
+      <a class="btn btn--primary btn--small" href={site.downloadUrl}>Baixar teste grátis</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  if (nav) {
+    const onScroll = () => nav.toggleAttribute('data-scrolled', window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(245 243 236 / 0.78);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    box-shadow: 0 1px 0 transparent;
+    transition: box-shadow var(--dur-base) var(--ease-out);
+  }
+  .nav[data-scrolled] {
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .nav-inner {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+  .brand {
+    display: inline-flex;
+    border-radius: 8px;
+  }
+  nav {
+    margin-inline: auto;
+  }
+  .links {
+    list-style: none;
+    display: flex;
+    gap: 4px;
+  }
+  .links a {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink-2);
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out);
+  }
+  .links a:hover {
+    color: var(--ink-1);
+    background: rgb(22 24 27 / 0.05);
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  @media (max-width: 1040px) {
+    nav,
+    .platforms {
+      display: none;
+    }
+    .actions {
+      margin-left: auto;
+    }
+  }
+  @media (max-width: 420px) {
+    .actions .btn {
+      padding-inline: 14px;
+      font-size: 0.82rem;
+    }
+  }
+</style>

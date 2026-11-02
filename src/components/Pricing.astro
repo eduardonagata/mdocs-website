@@ -1,0 +1,293 @@
+---
+import { pricing, renewal, site } from '../data/site';
+
+const [individual, team] = pricing;
+---
+
+<section class="section pricing" id="preco">
+  <div class="container">
+    <header class="section-head section-head--center reveal">
+      <p class="label section-index">06 · Preço</p>
+      <h2 class="h2">
+        Compre uma vez.
+        <span class="paper-voice">É seu.</span>
+      </h2>
+      <p class="lead">
+        Licença perpétua, como os bons apps sempre foram. Inclui um ano de atualizações; depois, renove se quiser — a
+        versão que você tem continua funcionando para sempre.
+      </p>
+    </header>
+
+    <div class="plans">
+      {
+        individual && (
+          <article class="plate reveal" aria-labelledby="plano-individual">
+            <span class="plate-cut" aria-hidden="true" />
+            <div class="plate-head">
+              <p class="label plate-serial">Licença perpétua · Nº 0001</p>
+              <h3 class="plate-name" id="plano-individual">
+                {individual.name}
+              </h3>
+              <p class="plate-note">{individual.note}</p>
+            </div>
+            <p class="price">
+              <span class="amount">{individual.price}</span>
+              <span class="cadence">{individual.cadence}</span>
+            </p>
+            <ul class="feats">
+              {individual.features.map((f) => (
+                <li>{f}</li>
+              ))}
+            </ul>
+            <a class="btn btn--primary plate-cta" href={individual.cta.href}>
+              {individual.cta.label}
+            </a>
+          </article>
+        )
+      }
+
+      {
+        team && (
+          <article class="card reveal" style="--reveal-delay:100ms" aria-labelledby="plano-equipe">
+            <div class="plate-head">
+              <p class="label">Volume</p>
+              <h3 class="plate-name" id="plano-equipe">
+                {team.name}
+              </h3>
+              <p class="plate-note">{team.note}</p>
+            </div>
+            <p class="price">
+              <span class="amount">{team.price}</span>
+              <span class="cadence">{team.cadence}</span>
+            </p>
+            <ul class="feats">
+              {team.features.map((f) => (
+                <li>{f}</li>
+              ))}
+            </ul>
+            <a class="btn btn--ghost" href={team.cta.href}>
+              {team.cta.label}
+            </a>
+          </article>
+        )
+      }
+    </div>
+
+    <div class="terms reveal">
+      <div class="term">
+        <p class="label">Teste</p>
+        <p>
+          <strong>{site.trialDays} dias grátis</strong>, com todos os recursos. Sem cartão de crédito.
+          <a href={site.downloadUrl}>Baixar para Mac →</a>
+        </p>
+      </div>
+      <div class="term">
+        <p class="label">Atualizações</p>
+        <p>
+          {renewal.text} <span class="muted">Renovação: {renewal.price} por mais 12 meses.</span>
+        </p>
+      </div>
+      <div class="term">
+        <p class="label">Custos de IA</p>
+        <p>
+          Pagos diretamente ao provedor, na sua conta, conforme o uso. O MarkDocs não cobra nada sobre isso.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .plans {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--space-5);
+    max-width: 960px;
+    margin: var(--space-8) auto 0;
+    align-items: stretch;
+  }
+
+  .plate,
+  .card {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: var(--space-5);
+    padding: clamp(24px, 3.4vw, 40px);
+    border-radius: var(--radius-xl);
+  }
+
+  /* A licença como uma placa de metal escovado — mesma chapa do ícone */
+  .plate {
+    color: var(--metal-900);
+    background:
+      repeating-linear-gradient(118deg, rgb(255 255 255 / 0.08) 0 1px, transparent 1px 3px),
+      linear-gradient(135deg, #eef1f5 0%, #dfe4ea 30%, #c3cad4 70%, #aeb7c3 100%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.85),
+      inset 0 -1px 0 rgb(37 43 53 / 0.18),
+      0 0 0 1px rgb(37 43 53 / 0.1),
+      0 30px 60px -30px rgb(37 43 53 / 0.45);
+    overflow: hidden;
+  }
+
+  /* o recorte em contra-grão */
+  .plate-cut {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    width: 46px;
+    height: 46px;
+    border-radius: 11px;
+    background:
+      repeating-linear-gradient(28deg, rgb(255 255 255 / 0.1) 0 1px, transparent 1px 3px),
+      linear-gradient(135deg, #e7ebf0 0%, #b9c1cc 50%, #8e98a7 100%);
+  }
+
+  .plate .label {
+    color: var(--metal-600);
+  }
+
+  .plate-head {
+    display: grid;
+    gap: 6px;
+  }
+
+  .plate-name {
+    font-size: 1.45rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: inherit;
+  }
+
+  .plate-note {
+    font-size: 0.95rem;
+    color: var(--ink-2);
+  }
+
+  .plate .plate-note {
+    color: var(--metal-600);
+  }
+
+  .price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+
+  .amount {
+    font-size: clamp(2.6rem, 2rem + 2.4vw, 3.6rem);
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    line-height: 1;
+    font-variant-numeric: lining-nums;
+  }
+
+  .plate .amount {
+    /* gravado na chapa */
+    color: var(--metal-800);
+    text-shadow:
+      0 1px 0 rgb(255 255 255 / 0.65),
+      0 -1px 0 rgb(37 43 53 / 0.12);
+  }
+
+  .cadence {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-3);
+  }
+
+  .plate .cadence {
+    color: var(--metal-600);
+  }
+
+  .feats {
+    list-style: none;
+    display: grid;
+    align-content: start;
+    gap: 10px;
+  }
+
+  .feats li {
+    position: relative;
+    padding-left: 26px;
+    font-size: 0.97rem;
+  }
+
+  .feats li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.42em;
+    width: 12px;
+    height: 7px;
+    border-left: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor;
+    transform: rotate(-45deg);
+    opacity: 0.7;
+  }
+
+  .plate .feats li::before {
+    color: var(--steel);
+    opacity: 1;
+  }
+
+  .card {
+    background: var(--paper-0);
+    box-shadow: 0 0 0 1px var(--line);
+  }
+
+  .card .feats li {
+    color: var(--ink-2);
+  }
+
+  .plate-cta,
+  .card .btn {
+    justify-self: start;
+  }
+
+  /* ── Termos ──────────────────────────────────────────────── */
+  .terms {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+    max-width: 960px;
+    margin: var(--space-7) auto 0;
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--line);
+  }
+
+  .term {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+
+  .term strong {
+    color: var(--ink-1);
+    font-weight: 600;
+  }
+
+  .term a {
+    color: var(--steel);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .term a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 860px) {
+    .plans,
+    .terms {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

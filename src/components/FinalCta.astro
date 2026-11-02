@@ -1,0 +1,83 @@
+---
+import AppIcon from '../react/AppIcon';
+import { site } from '../data/site';
+---
+
+<section class="section final" aria-labelledby="final-title">
+  <div class="container inner reveal">
+    <div class="icon-stage" aria-hidden="true">
+      <AppIcon size={132} grain={0.13} />
+      <span class="reflection"><AppIcon size={132} grain={0.13} /></span>
+    </div>
+    <h2 class="display" id="final-title">
+      Seu próximo contrato,
+      <span class="paper-voice">composto em minutos.</span>
+    </h2>
+    <p class="lead">Converse, ajuste, exporte. O resto é tipografia — e disso o MarkDocs cuida.</p>
+    <div class="ctas">
+      <a class="btn btn--primary" href={site.downloadUrl}>Baixar para Mac</a>
+      <a class="btn btn--ghost" href="#preco">Ver preço</a>
+    </div>
+    <p class="label label--plain platforms">macOS · iPadOS · iOS · {site.trialDays} dias grátis</p>
+  </div>
+</section>
+
+<style>
+  .final {
+    text-align: center;
+    background: radial-gradient(ellipse 60% 60% at 50% 30%, var(--paper-0), transparent 70%);
+  }
+
+  .inner {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-5);
+  }
+
+  .icon-stage {
+    position: relative;
+    margin-bottom: var(--space-5);
+  }
+
+  .icon-stage > :global(svg) {
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 18px 24px rgb(37 43 53 / 0.3)) drop-shadow(0 2px 3px rgb(37 43 53 / 0.25));
+  }
+
+  .reflection {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: scaleY(-1);
+    opacity: 0.1;
+    mask-image: linear-gradient(to top, #000, transparent 45%);
+    -webkit-mask-image: linear-gradient(to top, #000, transparent 45%);
+    filter: blur(0.5px);
+  }
+
+  .display {
+    font-size: clamp(2.3rem, 1.4rem + 3.6vw, 4.2rem);
+  }
+
+  .display .paper-voice {
+    display: block;
+    color: var(--ink-2);
+  }
+
+  .lead {
+    max-width: 520px;
+  }
+
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .platforms {
+    margin-top: var(--space-2);
+  }
+</style>

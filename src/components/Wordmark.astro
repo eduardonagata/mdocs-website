@@ -1,0 +1,35 @@
+---
+import AppIcon from '../react/AppIcon';
+
+interface Props {
+  size?: number;
+  class?: string;
+}
+const { size = 28, class: className } = Astro.props;
+---
+
+<span class:list={['wordmark', className]} style={`--wm-size:${size}px`}>
+  <AppIcon size={size} grain={0.1} />
+  <span class="wm-text"><b>Mark</b>Docs</span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--wm-size) * 0.36);
+    color: var(--ink-1);
+  }
+  .wordmark :global(svg) {
+    filter: drop-shadow(0 1px 1.5px rgb(37 43 53 / 0.25));
+  }
+  .wm-text {
+    font-size: calc(var(--wm-size) * 0.72);
+    font-weight: 380;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .wm-text b {
+    font-weight: 720;
+  }
+</style>

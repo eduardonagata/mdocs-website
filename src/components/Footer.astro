@@ -1,0 +1,138 @@
+---
+import Wordmark from './Wordmark.astro';
+import { site } from '../data/site';
+
+const cols = [
+  {
+    title: 'Produto',
+    links: [
+      { href: '#demonstracao', label: 'Demonstração' },
+      { href: '#como-funciona', label: 'Como funciona' },
+      { href: '#recursos', label: 'Recursos' },
+      { href: '#preco', label: 'Preço' },
+    ],
+  },
+  {
+    title: 'Suporte',
+    links: [
+      { href: '#perguntas', label: 'Perguntas frequentes' },
+      { href: `mailto:${site.supportEmail}`, label: 'Contato' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { href: '#', label: 'Privacidade' },
+      { href: '#', label: 'Termos de licença' },
+    ],
+  },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="top">
+      <div class="brand">
+        <Wordmark size={28} />
+        <p class="muted">{site.tagline}</p>
+      </div>
+      {
+        cols.map((c) => (
+          <nav class="col" aria-label={c.title}>
+            <p class="label">{c.title}</p>
+            <ul>
+              {c.links.map((l) => (
+                <li>
+                  <a href={l.href}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+
+    <div class="colophon">
+      <p class="mono">
+        Colofão — composto em Hanken Grotesk, Libertinus Serif e IBM Plex Mono. Papel #F5F3EC. Tinta #16181B.
+      </p>
+      <p class="mono">© {site.year} {site.name}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding: var(--space-8) 0 var(--space-6);
+    background: var(--paper-2);
+    border-top: 1px solid var(--line);
+  }
+
+  .top {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  .brand {
+    display: grid;
+    align-content: start;
+    gap: var(--space-4);
+  }
+
+  .brand .muted {
+    max-width: 280px;
+    font-size: 0.95rem;
+  }
+
+  .col {
+    display: grid;
+    align-content: start;
+    gap: var(--space-4);
+  }
+
+  .col ul {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .col a {
+    font-size: 0.95rem;
+    color: var(--ink-2);
+  }
+
+  .col a:hover {
+    color: var(--ink-1);
+  }
+
+  .colophon {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-6);
+    margin-top: var(--space-8);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--line);
+  }
+
+  .colophon p {
+    font-size: 0.75rem;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 860px) {
+    .top {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .top {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

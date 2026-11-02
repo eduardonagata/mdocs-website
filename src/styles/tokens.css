@@ -1,0 +1,116 @@
+/*
+ * MarkDocs — tokens de design.
+ * Conceito "Papel & Chumbo": superfícies quentes de papel (o documento)
+ * contra metal frio escovado (a máquina). Ver DESIGN_SYSTEM.md.
+ */
+:root {
+  /* ── Papel (superfícies quentes) ─────────────────────────────── */
+  --paper-0: #fdfcf9; /* folha: cartões elevados */
+  --paper-1: #f5f3ec; /* fundo da página — bege sutil */
+  --paper-2: #ece9df; /* faixas rebaixadas */
+  --paper-3: #e1ddd0; /* divisórias fortes sobre papel */
+  --sheet: #fffefb; /* folha A4 renderizada */
+
+  /* ── Tinta (texto) ───────────────────────────────────────────── */
+  --ink-1: #16181b; /* títulos e texto principal */
+  --ink-2: #4a4f57; /* texto corrido */
+  --ink-3: #5b616a; /* secundário, legendas (do PDF do ícone) */
+  --ink-4: #8b9098; /* desativado, marcas de corte */
+  --line: rgb(22 24 27 / 0.1);
+  --line-strong: rgb(22 24 27 / 0.18);
+
+  /* ── Chumbo → prata (gradiente do ícone, amostrado) ──────────── */
+  --metal-50: #e6ebf1;
+  --metal-100: #dee4eb;
+  --metal-200: #d0d7e0;
+  --metal-300: #a0aab9;
+  --metal-400: #8693a5;
+  --metal-500: #6f7d90;
+  --metal-600: #4f5a69;
+  --metal-700: #323945;
+  --metal-800: #252b35;
+  --metal-900: #1a1e25;
+  --metal-gradient: linear-gradient(
+    135deg,
+    #dee4eb 8%,
+    #d0d7e0 20%,
+    #a0aab9 35%,
+    #6f7d90 50%,
+    #4f5a69 65%,
+    #323945 80%,
+    #252b35 92%
+  );
+
+  /* ── Azul aço (acento único) ─────────────────────────────────── */
+  --steel: #3f5f8c;
+  --steel-strong: #2f4b75;
+  --steel-soft: rgb(63 95 140 / 0.1);
+  --steel-glow: rgb(63 95 140 / 0.28);
+  --steel-on-dark: #9fb8dc;
+
+  /* ── Vermelho de revisão (somente para apontar problemas) ────── */
+  --proof: #b4442e;
+  --proof-soft: rgb(180 68 46 / 0.1);
+
+  /* ── Diferenças (histórico) ──────────────────────────────────── */
+  --diff-add: #2f6b4f;
+  --diff-add-bg: rgb(47 107 79 / 0.1);
+  --diff-del: #9a3b2b;
+  --diff-del-bg: rgb(154 59 43 / 0.09);
+
+  /* ── Tipografia ──────────────────────────────────────────────── */
+  --font-sans: 'Hanken Grotesk Variable', 'Hanken Grotesk', ui-sans-serif, system-ui,
+    -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Libertinus Serif', 'Iowan Old Style', 'Palatino', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --text-display: clamp(2.5rem, 1.5rem + 4.2vw, 4.6rem);
+  --text-h2: clamp(2rem, 1.3rem + 2.9vw, 3.4rem);
+  --text-h3: clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem);
+  --text-lead: clamp(1.08rem, 1rem + 0.35vw, 1.25rem);
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-label: 0.72rem;
+
+  --tracking-display: -0.038em;
+  --tracking-heading: -0.028em;
+  --tracking-label: 0.14em;
+
+  /* ── Espaço (base 4px) ───────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 144px;
+  --section-pad: clamp(88px, 6rem + 4vw, 168px);
+  --gutter: clamp(16px, 4vw, 40px);
+  --max: 1200px;
+  --max-text: 640px;
+
+  /* ── Raios ───────────────────────────────────────────────────── */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* ── Elevação ────────────────────────────────────────────────── */
+  --shadow-sheet: 0 1px 1px rgb(22 24 27 / 0.04), 0 8px 24px -8px rgb(22 24 27 / 0.12),
+    0 30px 60px -30px rgb(22 24 27 / 0.18);
+  --shadow-window: 0 0 0 0.5px rgb(22 24 27 / 0.14), 0 2px 4px rgb(22 24 27 / 0.04),
+    0 24px 48px -12px rgb(22 24 27 / 0.18), 0 60px 120px -40px rgb(37 43 53 / 0.3);
+  --shadow-control: 0 1px 2px rgb(22 24 27 / 0.12), 0 0 0 0.5px rgb(22 24 27 / 0.12);
+
+  /* ── Movimento ───────────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-base: 320ms;
+  --dur-slow: 700ms;
+}

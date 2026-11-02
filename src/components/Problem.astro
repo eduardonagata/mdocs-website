@@ -1,0 +1,310 @@
+---
+import A4Page from '../react/a4/A4Page';
+import { REFINED_STYLE } from '../react/a4/docStyle';
+import { parseBlocks } from '../lib/markdown';
+import { FULL_MARKDOWN } from '../data/contract';
+
+const blocks = parseBlocks(FULL_MARKDOWN);
+
+const today = [
+  'Pedir o texto à IA',
+  'Copiar e colar no editor de texto',
+  'Apagar cada # e cada ** à mão',
+  'Reaplicar fontes, corpos e estilos',
+  'Acertar margens e encaixar o timbre',
+  'Exportar o PDF',
+];
+---
+
+<section class="section problem" id="problema">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="label section-index">01 · O problema</p>
+      <h2 class="h2">
+        A IA pensa em markdown.
+        <span class="paper-voice">Documentos formais, não.</span>
+      </h2>
+      <p class="lead">
+        Markdown é o formato nativo da IA: leve, estruturado, econômico em tokens e fácil de revisar. Mas contratos,
+        pareceres e propostas precisam de A4, margens, timbre e uma hierarquia tipográfica consistente. Entre um e
+        outro, sobra trabalho manual — e ele recomeça a cada revisão.
+      </p>
+    </header>
+
+    <div class="compare">
+      <!-- ── Hoje ─────────────────────────────────────────── -->
+      <article class="card card--today reveal">
+        <header class="card-head">
+          <span class="label label--proof">Hoje</span>
+          <span class="count mono">6 passos · a cada revisão</span>
+        </header>
+
+        <div class="mess" aria-hidden="true">
+          <div class="mess-sheet">
+            <p>
+              <span class="proof-circle">##</span> Contrato de Locação
+            </p>
+            <p>
+              <span class="proof-circle">**</span>Locador:<span class="proof-wave">**</span> Pedro de Pacas, pessoa física,
+              domiciliado e residente conforme registros…
+            </p>
+            <p>
+              <span class="proof-circle">##</span> Vigência
+            </p>
+            <p>
+              O contrato terá vigência de <span class="proof-wave">**24 meses**</span>, iniciando-se em [data de início]…
+            </p>
+            <p>- Pagar pontualmente o aluguel mensal</p>
+            <p>- Manter o imóvel em perfeito estado</p>
+          </div>
+          <span class="note note--1 mono">símbolos soltos</span>
+          <span class="note note--2 mono">sem timbre · sem margens</span>
+          <span class="note note--3 mono">fonte padrão</span>
+        </div>
+
+        <ol class="steps steps--today">
+          {
+            today.map((t, i) => (
+              <li>
+                <span class="n mono">{String(i + 1).padStart(2, '0')}</span>
+                {t}
+              </li>
+            ))
+          }
+          <li class="loop">
+            <span class="n mono">↻</span>
+            A IA revisou o texto? Repita tudo.
+          </li>
+        </ol>
+      </article>
+
+      <!-- ── Com o MarkDocs ───────────────────────────────── -->
+      <article class="card card--md reveal" style="--reveal-delay:120ms">
+        <header class="card-head">
+          <span class="label label--steel">Com o MarkDocs</span>
+          <span class="count mono">2 passos</span>
+        </header>
+
+        <div class="clean">
+          <div class="clean-sheet crop">
+            <span class="crop-mark crop-mark--tl"></span>
+            <span class="crop-mark crop-mark--tr"></span>
+            <span class="crop-mark crop-mark--bl"></span>
+            <span class="crop-mark crop-mark--br"></span>
+            <A4Page style={REFINED_STYLE} blocks={blocks} pageNumber={1} pageCount={2} ariaHidden />
+          </div>
+        </div>
+
+        <ol class="steps steps--md">
+          <li>
+            <span class="n mono">01</span>
+            Peça o documento ao agente
+          </li>
+          <li>
+            <span class="n mono">02</span>
+            Exporte o PDF
+          </li>
+          <li class="loop">
+            <span class="n mono">↻</span>
+            A IA revisou o texto? O PDF já foi recomposto.
+          </li>
+        </ol>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .problem {
+    padding-top: clamp(56px, 6vw, 96px);
+  }
+
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    margin-top: var(--space-8);
+  }
+
+  .card {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: var(--space-6);
+    padding: clamp(20px, 3vw, 36px);
+    border-radius: var(--radius-lg);
+  }
+
+  .card--today {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--line-strong);
+  }
+
+  .card--md {
+    background: var(--paper-0);
+    box-shadow:
+      0 0 0 1px var(--line),
+      0 24px 48px -28px rgb(22 24 27 / 0.25);
+  }
+
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+  }
+
+  .label--proof {
+    color: var(--proof);
+  }
+
+  .count {
+    font-size: 0.75rem;
+    color: var(--ink-3);
+  }
+
+  /* ── A bagunça de hoje ─────────────────────────────────── */
+  .mess {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 330px;
+  }
+
+  .mess-sheet {
+    width: min(100%, 340px);
+    padding: 28px 26px 34px;
+    background: #fff;
+    transform: rotate(-1.4deg);
+    box-shadow:
+      0 1px 2px rgb(22 24 27 / 0.08),
+      0 12px 24px -12px rgb(22 24 27 / 0.2);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  .mess-sheet p + p {
+    margin-top: 8px;
+  }
+
+  .proof-circle {
+    display: inline-block;
+    padding: 0 3px;
+    border: 1.5px solid var(--proof);
+    border-radius: 50%;
+    color: #333;
+    line-height: 1.1;
+  }
+
+  .proof-wave {
+    text-decoration: underline wavy var(--proof);
+    text-decoration-thickness: 1.2px;
+    text-underline-offset: 3px;
+  }
+
+  .note {
+    position: absolute;
+    font-size: 10.5px;
+    letter-spacing: 0.02em;
+    color: var(--proof);
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--proof-soft);
+    white-space: nowrap;
+  }
+
+  .note--1 {
+    top: 8%;
+    right: 2%;
+    transform: rotate(3deg);
+  }
+  .note--2 {
+    bottom: 6%;
+    left: 0;
+    transform: rotate(-2deg);
+  }
+  .note--3 {
+    top: 46%;
+    right: -2%;
+    transform: rotate(2deg);
+  }
+
+  /* ── O resultado limpo ──────────────────────────────────── */
+  .clean {
+    display: grid;
+    place-items: center;
+    min-height: 330px;
+  }
+
+  .clean-sheet {
+    width: min(100%, 248px);
+    box-shadow: var(--shadow-sheet);
+    --crop-len: 10px;
+    --crop-gap: 7px;
+  }
+
+  /* ── Passos ─────────────────────────────────────────────── */
+  .steps {
+    list-style: none;
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .steps li {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.95rem;
+    color: var(--ink-2);
+  }
+
+  .steps .n {
+    width: 22px;
+    flex: none;
+    font-size: 0.72rem;
+    color: var(--ink-4);
+  }
+
+  .steps--today li:not(.loop) {
+    color: var(--ink-3);
+  }
+
+  .steps .loop {
+    font-weight: 600;
+    color: var(--ink-1);
+    border-bottom: 0;
+  }
+
+  .steps--today .loop .n {
+    color: var(--proof);
+    font-size: 0.95rem;
+  }
+
+  .steps--md li {
+    color: var(--ink-1);
+    font-weight: 500;
+  }
+
+  .steps--md .loop .n {
+    color: var(--steel);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 860px) {
+    .compare {
+      grid-template-columns: 1fr;
+    }
+    .mess,
+    .clean {
+      min-height: 0;
+      padding-block: var(--space-4);
+    }
+    .note--3 {
+      display: none;
+    }
+  }
+</style>

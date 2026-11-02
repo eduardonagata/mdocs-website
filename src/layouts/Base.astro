@@ -1,0 +1,95 @@
+---
+import '@fontsource-variable/hanken-grotesk';
+// Apenas os subconjuntos latinos — o site é em português.
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-ext-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
+import '@fontsource/ibm-plex-mono/latin-ext-500.css';
+import '@fontsource/libertinus-serif/latin-400.css';
+import '@fontsource/libertinus-serif/latin-ext-400.css';
+import '@fontsource/libertinus-serif/latin-400-italic.css';
+import '@fontsource/libertinus-serif/latin-ext-400-italic.css';
+import '@fontsource/libertinus-serif/latin-600.css';
+import '@fontsource/libertinus-serif/latin-ext-600.css';
+import '@fontsource/libertinus-serif/latin-700.css';
+import '@fontsource/libertinus-serif/latin-ext-700.css';
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = `${site.name} — ${site.tagline}`, description = site.description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="pt-BR" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#f5f3ec" />
+    <meta name="color-scheme" content="light" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+    <slot />
+
+    <script>
+      // Revelação discreta ao rolar — apenas opacidade e 14px de deslocamento.
+      const els = document.querySelectorAll<HTMLElement>('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-in');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-in'));
+      }
+    </script>
+
+    <style>
+      .skip {
+        position: absolute;
+        left: 16px;
+        top: -60px;
+        z-index: 100;
+        padding: 10px 14px;
+        border-radius: 8px;
+        background: var(--ink-1);
+        color: var(--paper-0);
+        font-weight: 600;
+        transition: top var(--dur-fast) var(--ease-out);
+      }
+      .skip:focus {
+        top: 12px;
+      }
+    </style>
+  </body>
+</html>
